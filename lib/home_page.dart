@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'products.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({super.key});
@@ -8,7 +9,7 @@ class HomePage extends StatefulWidget{
 }
 
 class _HomePageState extends State<HomePage> {
- final List<String> filters= const['All','Addidas','Nike','Bata'];
+ final List<String> filters= const['All','Addidas','Nike','Bata','Sparx','Puma'];
 
   late String _selectedFilter;
 
@@ -64,13 +65,39 @@ class _HomePageState extends State<HomePage> {
                       });
                     },
                     child: Chip(label: Text(filter),
-                    backgroundColor: _selectedFilter == filter ? const Color.fromARGB(255, 205, 217, 75) : Colors.grey,
+                    backgroundColor: _selectedFilter == filter ? const Color.fromARGB(255, 182, 137, 15) : Colors.grey,
                     labelStyle: TextStyle(fontSize: 15),
                     ),
                   ),
                 );
               },
               ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: products.length,
+                itemBuilder: (context,index){
+                  final product=products[index];
+                  return Container(
+                    margin: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                     
+                    ),
+                    child: Column(
+                      children: [
+                        Text(product['title'],style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.red),textAlign: TextAlign.left),
+                       Image.asset(product['image']),
+                        Text("Model: ${product['name']}",style: Theme.of(context).textTheme.bodyMedium,textAlign: TextAlign.left),
+                        Text("Price: ₹ ${product['price'].toString()}",style: Theme.of(context).textTheme.bodyMedium,textAlign: TextAlign.left),
+                        Text("Size: ${product['size'].toString()}",style: Theme.of(context).textTheme.bodyMedium,textAlign: TextAlign.left,),
+                        SizedBox(height: 10),
+                      ],
+                    ),
+                  );
+                }),
             )
           ],
         ),

@@ -14,7 +14,13 @@ class ShoppingApp extends StatelessWidget {
     return MaterialApp(
       home: HomePage(),
       theme: ThemeData(
-       colorScheme: .fromSeed(seedColor: Colors.yellow),
+       colorScheme: .fromSeed(seedColor: const Color.fromARGB(255, 255, 255, 255)),
+       textTheme: TextTheme(
+        bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
+        bodyMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.normal,color: Colors.black),
+        bodySmall: TextStyle(fontSize: 12, fontWeight: FontWeight.normal,color: Colors.black),
+        
+       ),
       ),
        debugShowCheckedModeBanner: false,
     );
