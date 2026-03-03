@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget{
+class HomePage extends StatefulWidget{
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
  final List<String> filters= const['All','Addidas','Nike','Bata'];
 
-    @override
+  late String _selectedFilter;
+
+  @override
+  void initState(){
+    super.initState();
+    _selectedFilter=filters[0];
+  }
+
+  @override
   Widget build(BuildContext context){
     return Scaffold(
       body: SafeArea(child: Padding(
@@ -43,8 +57,16 @@ class HomePage extends StatelessWidget{
                 final filter=filters[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Chip(label: Text(filter),
-                  labelStyle: TextStyle(fontSize: 15),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedFilter = filter;
+                      });
+                    },
+                    child: Chip(label: Text(filter),
+                    backgroundColor: _selectedFilter == filter ? const Color.fromARGB(255, 205, 217, 75) : Colors.grey,
+                    labelStyle: TextStyle(fontSize: 15),
+                    ),
                   ),
                 );
               },
