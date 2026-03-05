@@ -1,25 +1,25 @@
 const List<Map<String, dynamic>>  products=[
-  { 'title': 'Addidas',
+  { 'title': 'Adidas',
     'name': 'Adidas Men\'s Zap-Run 2 Running Shoes',
     'price': 1000,
     'image': 'assets/images/add1.png',
     'size': ['5', '6', '7', '8', '9', '10', '11', '12'],
   },
   {
-    'title': 'Addidas',
+    'title': 'Adidas',
     'name': 'Adidas Mens Duramo Sl 2.0 Running ShoesRunning Shoe',
     'price': 1100,
     'image': 'assets/images/add2.png',
     'size': ['5', '6', '7', '8', '9', '10', '11', '12'],
   },
   {
-    'title': 'Addidas',
+    'title': 'Adidas',
     'name': 'Adidas Samba OG White',
     'price': 1800,
     'image': 'assets/images/add3.png',
     'size': ['5', '6', '7', '8', '9', '10', '11', '12'],
   }, {
-    'title': 'Addidas',
+    'title': 'Adidas',
     'name': 'Adidas sneakers',
     'price': 1300,
     'image': 'assets/images/add4.png',
@@ -27,7 +27,7 @@ const List<Map<String, dynamic>>  products=[
   },
   
    {
-    'title': 'Addidas',
+    'title': 'Adidas',
     'name': 'Men Zapid Running Shoes',
     'price': 1100,
     'image': 'assets/images/add5.png',
