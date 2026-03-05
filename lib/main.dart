@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopping/home_page.dart';
-
+import 'splash_screen.dart';
 void main() {
   runApp(const ShoppingApp());
 }
@@ -12,7 +11,7 @@ class ShoppingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: SplashScreen(),
       theme: ThemeData(
        colorScheme: .fromSeed(seedColor: const Color.fromARGB(255, 255, 255, 255)),
        textTheme: TextTheme(
@@ -21,8 +20,23 @@ class ShoppingApp extends StatelessWidget {
         bodySmall: TextStyle(fontSize: 12, fontWeight: FontWeight.normal,color: Colors.black),
         
        ),
+       inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.black),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.black),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.red),
+        ),
+        hintStyle: TextStyle(color: Colors.grey),
       ),
-       debugShowCheckedModeBanner: false,
+    ),
+    debugShowCheckedModeBanner: false,
     );
   }
 }
