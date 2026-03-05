@@ -16,7 +16,7 @@ class ShoppingApp extends StatelessWidget {
       theme: ThemeData(
        colorScheme: .fromSeed(seedColor: const Color.fromARGB(255, 255, 255, 255)),
        textTheme: TextTheme(
-        bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
+        bodyLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.black),
         bodyMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.normal,color: Colors.black),
         bodySmall: TextStyle(fontSize: 12, fontWeight: FontWeight.normal,color: Colors.black),
         
