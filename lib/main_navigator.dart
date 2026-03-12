@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
-import 'cart_page.dart';
-import 'profile_page.dart';
+import 'screens/home_page.dart';
+import 'screens/cart_page.dart';
+import 'screens/profile_page.dart';
 
 class MainNavigator extends StatefulWidget {
   const MainNavigator({super.key});
