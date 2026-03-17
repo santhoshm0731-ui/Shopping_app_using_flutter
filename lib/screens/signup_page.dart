@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shopping/screens/login_page.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -88,10 +87,7 @@ class _SignupPageState extends State<SignupPage> {
     });
 
     _showMessage('Signup successful');
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginPage()),
-    );
+    Navigator.pushReplacementNamed(context, '/login');
   }
 
   Widget _buildTextField({
@@ -278,12 +274,7 @@ class _SignupPageState extends State<SignupPage> {
                       Center(
                         child: TextButton(
                           onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoginPage(),
-                              ),
-                            );
+                            Navigator.pushReplacementNamed(context, '/login');
                           },
                           child: RichText(
                             text: TextSpan(

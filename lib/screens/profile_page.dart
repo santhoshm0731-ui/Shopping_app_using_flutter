@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shopping/screens/login_page.dart';
 
 class ProfileContent extends StatefulWidget {
   const ProfileContent({super.key});
@@ -44,11 +43,7 @@ class _ProfileContentState extends State<ProfileContent> {
 
     if (!mounted) return;
 
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginPage()),
-      (route) => false,
-    );
+    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
   }
 
   Future<void> _editField({
@@ -205,6 +200,11 @@ class _ProfileContentState extends State<ProfileContent> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF6F7FB),
+      appBar: AppBar(
+        title: const Text('Profile'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: SafeArea(
         child: _isLoading
             ? const Center(child: CircularProgressIndicator())

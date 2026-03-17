@@ -5,32 +5,24 @@ class CartContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Cart',
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Cart'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: const SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Center(
+            child: Text(
+              'Your cart is empty',
               style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: Colors.grey,
               ),
             ),
-            SizedBox(height: 20),
-            Expanded(
-              child: Center(
-                child: Text(
-                  'Your cart is empty',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

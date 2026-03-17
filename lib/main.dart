@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'screens/cart_page.dart';
+import 'screens/home_page.dart';
+import 'screens/login_page.dart';
+import 'screens/profile_page.dart';
+import 'screens/signup_page.dart';
 import 'screens/splash_screen.dart';
 
 void main() {
@@ -21,6 +26,13 @@ class ShoppingApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
+      routes: {
+        '/login': (context) => const LoginPage(),
+        '/signup': (context) => const SignupPage(),
+        '/home': (context) => const HomeContent(),
+        '/cart': (context) => const CartContent(),
+        '/profile': (context) => const ProfileContent(),
+      },
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: colorScheme,

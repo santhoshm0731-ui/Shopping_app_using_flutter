@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shopping/main_navigator.dart';
-import 'package:shopping/screens/signup_page.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -67,10 +65,7 @@ class _LoginPageState extends State<LoginPage> {
 
       if (!mounted) return;
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const MainNavigator()),
-      );
+      Navigator.pushReplacementNamed(context, '/home');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -275,11 +270,9 @@ class _LoginPageState extends State<LoginPage> {
                           Center(
                             child: TextButton(
                               onPressed: () {
-                                Navigator.pushReplacement(
+                                Navigator.pushReplacementNamed(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SignupPage(),
-                                  ),
+                                  '/signup',
                                 );
                               },
                               child: RichText(
