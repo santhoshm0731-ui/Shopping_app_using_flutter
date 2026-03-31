@@ -30,7 +30,7 @@ class ShoppingApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignupPage(),
         '/home': (context) => const HomeContent(),
-        '/cart': (context) => const CartContent(),
+        '/cart': (context) =>  CartContent(cartItems: [],),
         '/profile': (context) => const ProfileContent(),
       },
       theme: ThemeData(
