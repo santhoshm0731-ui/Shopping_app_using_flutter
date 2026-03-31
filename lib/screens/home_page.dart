@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'cart_page.dart';
 import '../products.dart';
 
 class HomeContent extends StatefulWidget {
@@ -22,6 +23,8 @@ class _HomeContentState extends State<HomeContent> {
   final TextEditingController _searchController = TextEditingController();
   late String _selectedFilter;
   String _searchText = '';
+  int _cartItemCount = 0;
+  List<Map<String, dynamic>> cartItems = [];
 
   @override
   void initState() {
@@ -57,6 +60,75 @@ class _HomeContentState extends State<HomeContent> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF6F7FB),
+      bottomNavigationBar: _cartItemCount > 0
+          ? SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18,
+                    vertical: 14,
+                  ),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primary,
+                    borderRadius: BorderRadius.circular(18),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.12),
+                        blurRadius: 18,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Items added to cart',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              '$_cartItemCount item${_cartItemCount == 1 ? '' : 's'}',
+                              style: const TextStyle(color: Colors.white70),
+                            ),
+                          ],
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  CartContent(cartItems: cartItems),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: theme.colorScheme.primary,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 18,
+                            vertical: 12,
+                          ),
+                        ),
+                        child: const Text('View cart'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          : null,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -75,7 +147,13 @@ class _HomeContentState extends State<HomeContent> {
                   const Spacer(),
                   IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/cart');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              CartContent(cartItems: cartItems),
+                        ),
+                      );
                     },
                     icon: const Icon(Icons.shopping_cart_outlined),
                     tooltip: 'Cart',
@@ -203,43 +281,173 @@ class _HomeContentState extends State<HomeContent> {
               ),
             ],
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                product['title'] as String,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
+          child: GestureDetector(
+            
+          onTap: () {
+            final name = product['name'] as String;
+            final price = product['price'] as int;
+            final sizes = (product['size'] as List<dynamic>).join(', ');
+            final image=product['image'] as String;
+
+            int quantity = 1;
+            bool showCounter = false;
+
+            showDialog(
+              context: context,
+              builder: (dialogContext) {
+                return StatefulBuilder(
+                  builder: (context, setDialogState) {
+                    return AlertDialog(
+                      title: const Text('Product Details'),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(name),
+                          Text('₹ $price'),
+                          Text('Available Sizes: $sizes'),
+                          const SizedBox(height: 45),
+                          if (showCounter)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  width: 120,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: const Color.fromARGB(
+                                      255,
+                                      227,
+                                      97,
+                                      27,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: Colors.grey.shade300,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          if (quantity > 1) {
+                                            setDialogState(() {
+                                              quantity--;
+                                            });
+                                          }
+                                        },
+                                        icon: const Icon(Icons.remove),
+                                      ),
+                                      Text(
+                                        '$quantity',
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          setDialogState(() {
+                                            quantity++;
+                                          });
+                                        },
+                                        icon: const Icon(Icons.add),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(dialogContext),
+                          child: const Text('Close'),
+                        ),
+                        if (!showCounter)
+                          TextButton(
+                            onPressed: () {
+                              setDialogState(() {
+                                showCounter = true;
+                              });
+                            },
+                            child: const Text('Add to Cart'),
+                          )
+                        else
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                _cartItemCount += quantity;
+                                cartItems.add({
+                                  'name': name,
+                                  'price': price,
+                                  'image': image,
+                                  'quantity': quantity,
+                                  'title': product['title'],
+                                });
+                              });
+                              Navigator.pop(dialogContext);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    '$quantity item${quantity == 1 ? '' : 's'} added to cart',
+                                  ),
+                                ),
+                              );
+                            },
+                            child: const Text('Done'),
+                          ),
+                      ],
+                    );
+                  },
+                );
+              },
+            );
+          },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  product['title'] as String,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              Center(
-                child: Image.asset(
-                  product['image'] as String,
-                  height: 180,
-                  fit: BoxFit.contain,
+                const SizedBox(height: 12),
+                Center(
+                  child: Image.asset(
+                    product['image'] as String,
+                    height: 180,
+                    fit: BoxFit.contain,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 14),
-              Text(
-                'Model: ${product['name']}',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Price: ₹ ${product['price']}',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Available Sizes: $sizes',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ],
+                const SizedBox(height: 14),
+                Text(
+                  'Model: ${product['name']}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Price: ₹ ${product['price']}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Available Sizes: $sizes',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ],
+              
+            ),
           ),
         );
       },
     );
   }
+  
 }
